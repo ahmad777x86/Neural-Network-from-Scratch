@@ -20,5 +20,5 @@ if __name__ == "__main__":
     layer1.forward(X)
     print("Forward: ", layer1.output)
 
-    grad_1 = layer1.backward(layer1.output)
+    grad_1 = layer1.backward(layer1.output - y)
     print("Input Gradient: ", grad_1)
