@@ -8,13 +8,13 @@ class Dense_Layer:
         self.bias = np.zeros((1, n_neurons))
 
     def forward(self, X):
-        output = np.dot(X, self.weights) + self.bias
-        return output
+        self.output = np.dot(X, self.weights) + self.bias
+        return self.output
     
 
 layer1 = Dense_Layer(2,3)
 layer2 = Dense_Layer(3,1)
 
-output1 = layer1.forward(X)
-output2 = layer2.forward(output1)
-print(output2)
+layer1.forward(X)
+layer2.forward(layer1.output)
+print(layer2.output)
