@@ -6,7 +6,7 @@ y = [[0],[1],[0],[1]]
 class Dense_Layer:
     def __init__(self, n_inputs, n_neurons):
         self.weights = np.random.rand(n_inputs,n_neurons)
-        self.bias = np.zeros((1, n_neurons))
+        self.bias = np.random.rand(1, n_neurons)
 
     def forward(self, X):
         self.X = X
