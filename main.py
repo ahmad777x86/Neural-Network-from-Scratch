@@ -4,42 +4,50 @@ from sklearn.datasets import make_regression
 from ReLU_Layer import ReLU_Layer
 from Sigmoid_Layer import Sigmoid_Layer
 from Dense_Layer import Dense_Layer
+from BCE_Loss import Binary_Cross_Entropy_Loss
 
-X, y = make_regression(n_samples = 4, n_features=2,random_state=42)
-print(f"Features: {X}, X shape: {X.shape}")
-print(f"Target: {y}, y shape: {y.shape}")
+X = np.array([[1,1],[0,0],[0,1],[1,0]])
+y = np.array([[1],[1],[0],[0]])
 
-
-# model
+# model 1
 layer1 = Dense_Layer(2,4)
 layer2 = ReLU_Layer()
 layer3 = Dense_Layer(4,1)
+layer4 = Sigmoid_Layer()
+
+# Loss
+loss = Binary_Cross_Entropy_Loss()
 
 # forward pass
 def predict():
     layer1.forward(X)
     layer2.forward(layer1.output)
     layer3.forward(layer2.output)
+    layer4.forward(layer3.output)
 
-    print(layer3.output)
-
+    print("Prediction: ", layer4.output)
+    
 
 # backward pass
-for _ in range(10):
+for _ in range(1000):
     predict()
-    grad_3 = layer3.backward(layer3.output - y.reshape(4,1))
+    print(f"Loss: {loss.forward(y,layer4.output)}")
+    loss_gradient = loss.backward(y,layer4.output)
+    print("Loss grad shape: ", loss_gradient.shape)
+    grad_4 = layer4.backward(loss_gradient)
+    grad_3 = layer3.backward(grad_4)
     print("Input Gradient 3: ", grad_3)
     print("Weight Gradient 3: ",layer3.w_gradient)
-    layer3.weights -= 0.01 * layer3.w_gradient
-    layer3.bias -= 0.01 * layer3.b_gradient
+    layer3.weights -= 0.1 * layer3.w_gradient
+    layer3.bias -= 0.1 * layer3.b_gradient
 
     grad_2 = layer2.backward(grad_3)
     print("Gradient 2: ", grad_2)
 
     grad_1 = layer1.backward(grad_2)
     print("Gradient 1: ", grad_1)
-    print("Weight Gradient 1: ",layer3.w_gradient)
-    layer1.weights -= 0.01 * layer1.w_gradient
-    layer1.bias -= 0.01 * layer1.b_gradient
+    print("Weight Gradient 1: ",layer1.w_gradient)
+    layer1.weights -= 0.1 * layer1.w_gradient
+    layer1.bias -= 0.1 * layer1.b_gradient
 
 predict()
