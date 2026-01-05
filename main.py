@@ -22,12 +22,10 @@ loss = Binary_Cross_Entropy_Loss()
 
 # forward pass
 def predict():
-    layer1.forward(X)
-    layer2.forward(layer1.output)
-    layer3.forward(layer2.output)
-    layer4.forward(layer3.output)
-
-    print("Prediction: ", layer4.output)
+    signal = X
+    for layer in Layers:
+        signal = layer.forward(signal)
+    print("Prediction: ", Layers[-1].output)
 
 
 
