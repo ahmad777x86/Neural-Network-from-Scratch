@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.datasets import make_regression
+import matplotlib.pyplot as plt
 
 from ReLU_Layer import ReLU_Layer
 from Sigmoid_Layer import Sigmoid_Layer
@@ -9,11 +10,12 @@ from BCE_Loss import Binary_Cross_Entropy_Loss
 X = np.array([[1,1],[0,0],[0,1],[1,0]])
 y = np.array([[1],[1],[0],[0]])
 
-# model 1
+# model
 layer1 = Dense_Layer(2,4)
 layer2 = ReLU_Layer()
 layer3 = Dense_Layer(4,1)
 layer4 = Sigmoid_Layer()
+Layers = [layer1, layer2, layer3, layer4]
 
 # Loss
 loss = Binary_Cross_Entropy_Loss()
@@ -26,12 +28,15 @@ def predict():
     layer4.forward(layer3.output)
 
     print("Prediction: ", layer4.output)
-    
+
+
 
 # backward pass
+Loss = []
 for _ in range(1000):
     predict()
-    print(f"Loss: {loss.forward(y,layer4.output)}")
+    Loss.append(loss.forward(y,layer4.output)[0])
+    print(f"Loss: {Loss[_]}")
     loss_gradient = loss.backward(y,layer4.output)
     print("Loss grad shape: ", loss_gradient.shape)
     grad_4 = layer4.backward(loss_gradient)
@@ -51,3 +56,9 @@ for _ in range(1000):
     layer1.bias -= 0.1 * layer1.b_gradient
 
 predict()
+
+plt.plot(range(1000), Loss, 'r-')
+plt.title("Binary Cross Entropy Loss over Epochs")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.show()
