@@ -13,6 +13,10 @@ class Sigmoid_Layer:
         self.inp_gradient = grad*(self.output) * (1 - self.output)
         return self.inp_gradient
     
+    @property
+    def params(self):
+        return []
+    
 if __name__ == "__main__":
     layer1 = Sigmoid_Layer()
 

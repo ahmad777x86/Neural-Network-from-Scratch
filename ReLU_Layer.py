@@ -14,6 +14,10 @@ class ReLU_Layer:
         self.inp_gradient = grad * mask
         return self.inp_gradient
     
+    @property
+    def params(self):
+        return []
+    
 if __name__ == "__main__":
     layer1 = ReLU_Layer()
 

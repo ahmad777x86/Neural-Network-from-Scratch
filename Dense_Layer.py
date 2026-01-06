@@ -19,6 +19,10 @@ class Dense_Layer:
         self.inp_gradient = np.dot(grad,np.transpose(self.weights))
         return self.inp_gradient
     
+    @property
+    def params(self):
+        return [(self.weights, self.bias),(self.w_gradient,self.b_gradient)]
+    
 if __name__ == "__main__":
     layer1 = Dense_Layer(2,3)
     layer2 = Dense_Layer(3,1)

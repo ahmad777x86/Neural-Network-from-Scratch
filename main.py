@@ -7,6 +7,7 @@ from Sigmoid_Layer import Sigmoid_Layer
 from Dense_Layer import Dense_Layer
 from BCE_Loss import Binary_Cross_Entropy_Loss
 from Seq_NN_Model import Sequential_Model
+from Optimizer import Optimizer
 
 X = np.array([[1,1],[0,0],[0,1],[1,0]])
 y = np.array([[1],[1],[0],[0]])
@@ -18,6 +19,9 @@ layer3 = Dense_Layer(4,1)
 layer4 = Sigmoid_Layer()
 Layers = [layer1, layer2, layer3, layer4]
 model = Sequential_Model(Layers)
+
+# Optimizer
+optimizer = Optimizer()
 
 # Loss
 loss = Binary_Cross_Entropy_Loss()
@@ -38,10 +42,7 @@ for _ in range(1000):
 
     model.backward(loss_gradient)
 
-    layer3.weights -= 0.1 * layer3.w_gradient
-    layer3.bias -= 0.1 * layer3.b_gradient
-    layer1.weights -= 0.1 * layer1.w_gradient
-    layer1.bias -= 0.1 * layer1.b_gradient
+    optimizer.step(model)
 
 model.forward(X)
 
