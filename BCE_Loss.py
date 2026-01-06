@@ -7,5 +7,6 @@ class Binary_Cross_Entropy_Loss:
         return loss
 
     def backward(self, y, preds):
+        preds = np.clip(preds,1e-7, 1 - 1e-7)
         grad = - (y/preds - (1-y)/(1-preds))
         return grad

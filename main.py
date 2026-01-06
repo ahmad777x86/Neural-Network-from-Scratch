@@ -21,7 +21,7 @@ Layers = [layer1, layer2, layer3, layer4]
 model = Sequential_Model(Layers)
 
 # Optimizer
-optimizer = Optimizer()
+optimizer = Optimizer(0.01)
 
 # Loss
 loss = Binary_Cross_Entropy_Loss()
@@ -33,14 +33,12 @@ model.forward(X)
 Loss = []
 for _ in range(1000):
 
-    model.forward(X)
+    model.forward(X, verbose=False)
     Loss.append(loss.forward(y,layer4.output)[0])
-    print(f"Loss: {Loss[_]}")
 
     loss_gradient = loss.backward(y,layer4.output)
-    print("Loss grad shape: ", loss_gradient.shape)
 
-    model.backward(loss_gradient)
+    model.backward(loss_gradient, verbose=False)
 
     optimizer.step(model)
 

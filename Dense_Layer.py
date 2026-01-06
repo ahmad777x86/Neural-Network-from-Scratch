@@ -5,8 +5,10 @@ y = [[0],[1],[0],[1]]
 
 class Dense_Layer:
     def __init__(self, n_inputs, n_neurons):
-        self.weights = np.random.rand(n_inputs,n_neurons)
-        self.bias = np.random.rand(1, n_neurons)
+        self.weights = np.random.randn(n_inputs,n_neurons) * np.sqrt(2.0/n_inputs)
+        self.bias = np.zeros((1, n_neurons))
+        print("Initial Weights: ", self.weights)
+        print("Initial Bias: ", self.bias)
 
     def forward(self, X):
         self.X = X
@@ -21,7 +23,7 @@ class Dense_Layer:
     
     @property
     def params(self):
-        return [(self.weights, self.bias),(self.w_gradient,self.b_gradient)]
+        return [(self.weights, self.w_gradient),(self.bias,self.b_gradient)]
     
 if __name__ == "__main__":
     layer1 = Dense_Layer(2,3)
