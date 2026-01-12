@@ -1,25 +1,21 @@
 #include "Dense.h"
+#include "Utilities/dot_product.h"
 #include <vector>
+#include <iostream>
 
 Dense::Dense(int n_inputs, int n_neurons)
 {
-    std::vector<std::vector<double>> weight(n_inputs, std::vector<double>(n_neurons));
-    std::vector<std::vector<double>> bias(1, std::vector<double>(n_neurons));
-    std::vector<std::vector<double>> w_gradient(n_inputs, std::vector<double>(n_neurons));
-    std::vector<std::vector<double>> b_gradient(1, std::vector<double>(n_neurons));
+    weight = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons, std::rand()));
+    bias = std::vector<std::vector<double>>(1, std::vector<double>(n_neurons));
+    w_gradient = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons));
+    b_gradient = std::vector<std::vector<double>>(1, std::vector<double>(n_neurons));
 }
 
 std::vector<std::vector<double>> Dense::forward(std::vector<std::vector<double>> &X)
 {
-    std::vector<std::vector<double>> output(weight.size(), std::vector<double>(X[0].size(), 0.0));
-    /* for (auto i = X.begin(); i != X.end(); i++)
-    {
-        for (auto j = i->begin(); j != i->end(); j++)
-        {
-            output[i][j] +=
-        }
-    } */
-    return X;
+    std::vector<std::vector<double>> output(X.size(), std::vector<double>(weight[0].size(), std::rand()));
+    output = Dot_Product::compute(X, weight);
+    return output;
 }
 
 std::vector<std::vector<double>> Dense::backward(std::vector<std::vector<double>> &grad)
