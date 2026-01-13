@@ -133,3 +133,23 @@ std::vector<std::vector<double>> Matrix::multiply_scalar(const std::vector<std::
 
     return C;
 }
+
+std::vector<std::vector<double>> Matrix::clip(const std::vector<std::vector<double>> &A)
+{
+    auto B = A;
+    for (int i = 0; i < A.size(); i++)
+    {
+        for (int j = 0; j < A[0].size(); j++)
+        {
+            if (B[i][j] < 10e-7)
+            {
+                B[i][j] = 10e-7;
+            }
+            else if (B[i][j] > 1 - 10e-7)
+            {
+                B[i][j] = 1 - 10e-7;
+            }
+        }
+    }
+    return B;
+}
