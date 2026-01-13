@@ -1,5 +1,5 @@
 #include "Dense.h"
-#include "Utilities/dot_product.h"
+#include "Utilities/Matrix_Op.h"
 #include <vector>
 #include <iostream>
 
@@ -14,7 +14,7 @@ Dense::Dense(int n_inputs, int n_neurons)
 std::vector<std::vector<double>> Dense::forward(std::vector<std::vector<double>> &X)
 {
     std::vector<std::vector<double>> output(X.size(), std::vector<double>(weight[0].size(), std::rand()));
-    output = Dot_Product::compute(X, weight);
+    output = Matrix::dot(X, weight);
     return output;
 }
 
