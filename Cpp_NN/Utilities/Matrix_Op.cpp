@@ -153,3 +153,16 @@ std::vector<std::vector<double>> Matrix::clip(const std::vector<std::vector<doub
     }
     return B;
 }
+
+std::vector<std::vector<double>> Matrix::reciprocate(const std::vector<std::vector<double>> &A)
+{
+    auto A_r = A;
+    for (int i = 0; i < A.size(); i++)
+    {
+        for (int j = 0; j < A[0].size(); j++)
+        {
+            A_r[i][j] = 1 / A[i][j];
+        }
+    }
+    return A_r;
+}

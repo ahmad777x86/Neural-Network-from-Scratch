@@ -63,5 +63,16 @@ int main()
         }
         std::cout << std::endl;
     }
+
+    auto loss_grad = Loss.backward(y, X_sigmoid);
+    std::cout << "\nLoss Gradient: " << std::endl;
+    for (auto &i : loss_grad)
+    {
+        for (auto &j : i)
+        {
+            std::cout << j << " ";
+        }
+        std::cout << std::endl;
+    }
     return 0;
 }

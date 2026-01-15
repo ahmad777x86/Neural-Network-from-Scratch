@@ -10,4 +10,5 @@ public:
     static std::vector<std::vector<double>> add_scalar(const std::vector<std::vector<double>> &A, double S);
     static std::vector<std::vector<double>> multiply_scalar(const std::vector<std::vector<double>> &A, double S);
     static std::vector<std::vector<double>> clip(const std::vector<std::vector<double>> &A);
+    static std::vector<std::vector<double>> reciprocate(const std::vector<std::vector<double>> &A);
 };
