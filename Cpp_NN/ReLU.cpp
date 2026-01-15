@@ -1,9 +1,11 @@
 #include "ReLU.h"
+#include "Utilities/Matrix_Op.h"
 #include <vector>
 
 std::vector<std::vector<double>> ReLU::forward(std::vector<std::vector<double>> &X)
 {
-    for (auto &i : X)
+    input = X;
+    for (auto &i : input)
     {
         for (auto &j : i)
         {
@@ -11,9 +13,22 @@ std::vector<std::vector<double>> ReLU::forward(std::vector<std::vector<double>> 
                 j = 0.0;
         }
     }
-    return X;
+    return input;
 }
 
-/* std::vector<std::vector<double>> ReLU::backward(std::vector<std::vector<double>> &grad)
+std::vector<std::vector<double>> ReLU::backward(std::vector<std::vector<double>> &grad)
 {
-} */
+    auto mask = input;
+    for (auto &i : mask)
+    {
+        for (auto &j : i)
+        {
+            if (j < 0)
+                j = 0;
+            else
+                j = 1;
+        }
+    }
+    auto input_gradient = Matrix::multiply_matrix(grad, mask);
+    return input_gradient;
+}

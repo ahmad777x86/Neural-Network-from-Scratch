@@ -4,7 +4,7 @@
 
 int LINK_TEST = 123;
 
-std::vector<std::vector<double>> Matrix::dot(const std::vector<std::vector<double>> &A, const std::vector<std::vector<double>> &B)
+std::vector<std::vector<double>> Matrix::dot(const std::vector<std::vector<double>> &A, const std::vector<std::vector<double>> &B, bool verbose)
 {
     int n = A.size();
     int m = B[0].size();
@@ -16,24 +16,27 @@ std::vector<std::vector<double>> Matrix::dot(const std::vector<std::vector<doubl
         std::exit(1);
     }
 
-    std::cout << "A matrix" << std::endl;
-    for (auto &i : A)
+    if (verbose)
     {
-        for (auto &j : i)
+        std::cout << "A matrix" << std::endl;
+        for (auto &i : A)
         {
-            std::cout << j << " ";
+            for (auto &j : i)
+            {
+                std::cout << j << " ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
-    }
 
-    std::cout << "B matrix" << std::endl;
-    for (auto &i : B)
-    {
-        for (auto &j : i)
+        std::cout << "B matrix" << std::endl;
+        for (auto &i : B)
         {
-            std::cout << j << " ";
+            for (auto &j : i)
+            {
+                std::cout << j << " ";
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 
     std::vector<std::vector<double>> C(n, std::vector<double>(m, 0.0));
@@ -84,8 +87,21 @@ std::vector<std::vector<double>> Matrix::multiply_matrix(const std::vector<std::
     return C;
 }
 
-std::vector<std::vector<double>> Matrix::add_matrix(const std::vector<std::vector<double>> &A, const std::vector<std::vector<double>> &B)
+std::vector<std::vector<double>> Matrix::add_matrix(const std::vector<std::vector<double>> &A, const std::vector<std::vector<double>> &B, bool broadcast)
 {
+    if (broadcast)
+    {
+        auto output = A;
+        for (int i = 0; i < output.size(); i++)
+        {
+            for (int j = 0; j < output[0].size(); j++)
+            {
+                output[i][j] += B[0][j];
+            }
+        }
+        return output;
+    }
+
     if (A.size() != B.size() || A[0].size() != B[0].size())
     {
         std::cerr << "Dimensions not same for matrix entry wise addition" << std::endl;
