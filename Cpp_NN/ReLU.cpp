@@ -5,7 +5,8 @@
 std::vector<std::vector<double>> ReLU::forward(std::vector<std::vector<double>> &X)
 {
     input = X;
-    for (auto &i : input)
+    auto output = input;
+    for (auto &i : output)
     {
         for (auto &j : i)
         {
@@ -13,7 +14,7 @@ std::vector<std::vector<double>> ReLU::forward(std::vector<std::vector<double>> 
                 j = 0.0;
         }
     }
-    return input;
+    return output;
 }
 
 std::vector<std::vector<double>> ReLU::backward(std::vector<std::vector<double>> &grad)

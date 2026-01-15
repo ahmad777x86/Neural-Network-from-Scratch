@@ -10,7 +10,7 @@
 int main()
 {
     std::vector<std::vector<double>> X = {{0, 0}, {1, 1}, {0, 1}, {1, 0}};
-    std::vector<std::vector<double>> y = {{1}, {1}, {0}, {0}};
+    std::vector<std::vector<double>> y = {{0}, {0}, {1}, {1}};
 
     // Model
     ReLU relu;
@@ -18,7 +18,7 @@ int main()
     Dense dense1(2, 4);
     Dense dense2(4, 1);
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 500; i++)
     {
         // Forward Pass
         auto X_densed1 = dense1.forward(X);
@@ -71,10 +71,10 @@ int main()
         std::cout << "\nInput Gradient: " << std::endl;
         Matrix::print(dense1_grad);
 
-        dense1.weight = Matrix::add_matrix(Matrix::multiply_scalar(dense1.w_gradient, -0.01), dense1.weight);
-        dense1.bias = Matrix::add_matrix(Matrix::multiply_scalar(dense1.b_gradient, -0.01), dense1.bias);
-        dense2.weight = Matrix::add_matrix(Matrix::multiply_scalar(dense2.w_gradient, -0.01), dense2.weight);
-        dense2.bias = Matrix::add_matrix(Matrix::multiply_scalar(dense2.b_gradient, -0.01), dense2.bias);
+        dense1.weight = Matrix::add_matrix(Matrix::multiply_scalar(dense1.w_gradient, -0.1), dense1.weight);
+        dense1.bias = Matrix::add_matrix(Matrix::multiply_scalar(dense1.b_gradient, -0.1), dense1.bias);
+        dense2.weight = Matrix::add_matrix(Matrix::multiply_scalar(dense2.w_gradient, -0.1), dense2.weight);
+        dense2.bias = Matrix::add_matrix(Matrix::multiply_scalar(dense2.b_gradient, -0.1), dense2.bias);
     }
     // Forward Pass
     auto X_densed1 = dense1.forward(X);

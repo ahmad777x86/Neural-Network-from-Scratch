@@ -5,7 +5,14 @@
 
 Dense::Dense(int n_inputs, int n_neurons)
 {
-    weight = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons, std::rand() % 2 - 0.5));
+    weight = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons, 0.0));
+    for (int i = 0; i < weight.size(); i++)
+    {
+        for (int j = 0; j < weight[0].size(); j++)
+        {
+            weight[i][j] = (((double)std::rand() / RAND_MAX) * 2.0 - 1.0);
+        }
+    }
     bias = std::vector<std::vector<double>>(1, std::vector<double>(n_neurons, 0.0));
     w_gradient = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons));
     b_gradient = std::vector<std::vector<double>>(1, std::vector<double>(n_neurons));
