@@ -13,6 +13,7 @@ Dense::Dense(int n_inputs, int n_neurons)
 
 std::vector<std::vector<double>> Dense::forward(std::vector<std::vector<double>> &X)
 {
+    input = X;
     std::vector<std::vector<double>> output(X.size(), std::vector<double>(weight[0].size(), std::rand()));
     output = Matrix::dot(X, weight);
     return output;
@@ -20,5 +21,8 @@ std::vector<std::vector<double>> Dense::forward(std::vector<std::vector<double>>
 
 std::vector<std::vector<double>> Dense::backward(std::vector<std::vector<double>> &grad)
 {
+    w_gradient = Matrix::dot(Matrix::transpose(input), grad);
+    b_gradient = Matrix::sum(grad);
+    auto input_gradient = Matrix::dot(grad, Matrix::transpose(weight));
     return grad;
 }

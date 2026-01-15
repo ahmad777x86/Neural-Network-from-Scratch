@@ -4,7 +4,7 @@
 
 int LINK_TEST = 123;
 
-std::vector<std::vector<double>> Matrix::dot(std::vector<std::vector<double>> &A, std::vector<std::vector<double>> &B)
+std::vector<std::vector<double>> Matrix::dot(const std::vector<std::vector<double>> &A, const std::vector<std::vector<double>> &B)
 {
     int n = A.size();
     int m = B[0].size();
@@ -165,4 +165,59 @@ std::vector<std::vector<double>> Matrix::reciprocate(const std::vector<std::vect
         }
     }
     return A_r;
+}
+std::vector<std::vector<double>> Matrix::transpose(const std::vector<std::vector<double>> &A)
+{
+    std::vector<std::vector<double>> A_t(A[0].size(), std::vector<double>(A.size(), 0.0));
+    for (int i = 0; i < A.size(); i++)
+    {
+        for (int j = 0; j < A[0].size(); j++)
+        {
+            A_t[j][i] = A[i][j];
+        }
+    }
+    return A_t;
+}
+
+std::vector<std::vector<double>> Matrix::sum(const std::vector<std::vector<double>> &A, int axis)
+{
+    if (axis == 0)
+    {
+        std::vector<std::vector<double>> output(1, std::vector<double>(A[0].size(), 0.0));
+
+        for (int i = 0; i < A[0].size(); i++)
+        {
+            for (int j = 0; j < A.size(); j++)
+            {
+                output[0][i] += A[j][i];
+            }
+        }
+
+        return output;
+    }
+    else
+    {
+        std::vector<std::vector<double>> output(A.size(), std::vector<double>(1, 0.0));
+
+        for (int i = 0; i < A.size(); i++)
+        {
+            for (int j = 0; j < A[0].size(); j++)
+            {
+                output[i][0] += A[i][j];
+            }
+        }
+        return output;
+    }
+}
+
+void Matrix::print(const std::vector<std::vector<double>> &A)
+{
+    for (auto &i : A)
+    {
+        for (auto &j : i)
+        {
+            std::cout << j << " ";
+        }
+        std::cout << std::endl;
+    }
 }
