@@ -1,16 +1,23 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "ReLU.h"
 #include "Sigmoid.h"
 #include "Dense.h"
 #include "BCE_Loss.h"
 #include "Utilities/Matrix_Op.h"
+#include "Utilities/matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
 
 int main()
 {
     std::vector<std::vector<double>> X = {{0, 0}, {1, 1}, {0, 1}, {1, 0}};
     std::vector<std::vector<double>> y = {{0}, {0}, {1}, {1}};
+
+    std::vector<double> loss_history(500);
+    std::vector<double> epochs(500);
 
     // Model
     ReLU relu;
@@ -38,6 +45,8 @@ int main()
 
         BCE Loss;
         auto loss = Loss.forward(y, X_sigmoid);
+        auto loss_sum = Matrix::sum(loss);
+        loss_history.push_back(loss_sum[0][0] / 4);
 
         std::cout << "\nLoss: " << std::endl;
         Matrix::print(loss);
@@ -97,6 +106,19 @@ int main()
 
     std::cout << "\nLoss: " << std::endl;
     Matrix::print(loss);
+
+    for (int i = 0; i < 500; i++)
+    {
+        epochs.push_back((double)i + 1);
+    }
+
+    plt::figure();
+    plt::plot(epochs, loss_history);
+    plt::xlabel("Epochs");
+    plt::ylabel("Loss");
+    plt::title("Binary Cross Entropy Loss over Epochs");
+
+    plt::savefig("Model_Evaluation_Classification_XOR.png");
 
     return 0;
 }
